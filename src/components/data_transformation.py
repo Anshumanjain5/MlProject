@@ -10,7 +10,6 @@ from utility import save_object
 from logger import logging
 import pandas as pd
 from components.data_ingestion import DataIngestion
-from icecream import ic
 from dataclasses import dataclass
 
 @dataclass
