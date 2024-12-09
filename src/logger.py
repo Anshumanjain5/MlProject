@@ -18,12 +18,3 @@ logging.basicConfig(
     format='[ %(asctime)s ] - %(lineno)d - %(name)s - %(levelname)s - %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S'
 )
-
-# Add a console handler
-console_handler = logging.StreamHandler()
-console_handler.setLevel(logging.INFO)
-console_handler.setFormatter(logging.Formatter('[ %(asctime)s ] - %(message)s'))
-logging.getLogger().addHandler(console_handler)
-
-if __name__ == "__main__":
-    logging.info("Logging has started")
