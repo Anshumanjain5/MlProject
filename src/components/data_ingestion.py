@@ -21,14 +21,14 @@ class DataIngestion:
         logging.info("Data ingestion initiated...")
         try:
             df = pd.read_csv(rf"{os.getcwd()}\notebook\data\students.csv")
-            os.makedirs(os.path.dirname(self.ingestion_path.train_path))
+            os.makedirs(os.path.dirname(self.ingestion_path.train_path),exist_ok=True)
 
-            df.to_csv(self.ingestion_path.raw_path, index=False,header=False)
+            df.to_csv(self.ingestion_path.raw_path, index=False)
             logging.info("Train Test Split initiated...")
 
             train_set,test_set = train_test_split(df,test_size=0.2,random_state=42)
-            train_set.to_csv(self.ingestion_path.train_path, index=False, header=False)
-            test_set.to_csv(self.ingestion_path.test_path, index=False, header=False)
+            train_set.to_csv(self.ingestion_path.train_path, index=False)
+            test_set.to_csv(self.ingestion_path.test_path, index=False)
 
             logging.info("Data ingestion completed successfully.")
             return (
