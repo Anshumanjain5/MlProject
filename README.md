@@ -90,9 +90,9 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## 📬 Contact
 
-- **Name**: [Your Name]
-- **Email**: [Your Email]
-- **GitHub**: [Your GitHub Profile]
+- **Name**: Anshuman jain
+- **Email**: anshumanjain8886@gmail.com
+- **GitHub**: [My Github Profile](https://github.com/Anshumanjain5)
 
 ---
 
