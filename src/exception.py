@@ -25,11 +25,3 @@ class CustomError(Exception):
 
     def __str__(self):
         return self.error_message
-
-if __name__ == "__main__":
-    try:
-        # Simulate an error
-        a = 1 / 0
-    except Exception as e:
-        logging.info("An error occurred", exc_info=True)  # Logs detailed traceback
-        raise CustomError(e, sys)  # Raise a custom error
