@@ -1,6 +1,6 @@
 import os
 import sys
-sys.path.append(r"C:\Users\anshuman\Desktop\MlProject\src")
+sys.path.append(rf"{os.getcwd()}\src")
 from exception import CustomError
 from logger import logging
 import pandas as pd
@@ -20,7 +20,7 @@ class DataIngestion:
     def initiate_data_ingestion(self) -> tuple[str, str]:
         logging.info("Data ingestion initiated...")
         try:
-            df = pd.read_csv(r"C:\Users\anshuman\Desktop\MlProject\notebook\data\students.csv")
+            df = pd.read_csv(rf"{os.getcwd()}\notebook\data\students.csv")
             os.makedirs(os.path.dirname(self.ingestion_path.train_path))
 
             df.to_csv(self.ingestion_path.raw_path, index=False,header=False)
