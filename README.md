@@ -12,11 +12,18 @@ The primary goals of this project are to:
 ## 📁 Repository Structure
 
 ```plaintext
-├── data/               # Raw and processed dataset files
 ├── notebooks/          # Jupyter notebooks for exploratory data analysis (EDA)
+    ├── data/           # Raw and processed dataset files
 ├── src/                # Source code for model training and evaluation
+    ├── components      # components for training and evaluation
+    ├── pipeline        # pipelines for training and evaluation
+    ├── exception.py    # Handle exceptions in a custom way
+    ├── logger.py       # Logging all the progress while executing code
+    ├── utility.py      # Contains general functionality for training and evaluation of the model
 ├── logs/               # Logs generated during model training
 ├── templates/          # Templates for the web application (if any)
+    ├── index.html      # Contains the structure of the home page
+    ├── predict.html    # Contains the structure of the form from which model will take information
 ├── app.py              # Main application script to run the model
 ├── README.md           # Project documentation
 ├── requirements.txt    # Python dependencies for the project
