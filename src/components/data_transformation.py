@@ -6,6 +6,7 @@ from sklearn.preprocessing import OneHotEncoder, LabelEncoder, StandardScaler
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from exception import CustomError
+import numpy as np
 from utility import save_object
 from logger import logging
 import pandas as pd
@@ -72,8 +73,19 @@ class DataTransformation:
 
             preprocessor = self.get_data_transformer()
 
-            train_arr = preprocessor.fit_transform(train_df)
-            test_arr = preprocessor.transform(test_df)
+            targetcolumn = "math_score"
+
+            train_set = train_df.drop(targetcolumn,axis=1)
+            target_train_set = train_df[targetcolumn]
+
+            test_set = test_df.drop(targetcolumn,axis=1)
+            target_test_set = test_df[targetcolumn]
+
+            train_transformed = preprocessor.fit_transform(train_df)
+            test_transformed = preprocessor.transform(test_df)
+
+            train_arr = np.c_[train_transformed,target_train_set]
+            test_arr = np.c_[test_transformed,target_test_set]
 
             save_object(
                 preprocessor,
