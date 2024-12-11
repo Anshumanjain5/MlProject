@@ -1,9 +1,6 @@
 from setuptools import find_packages, setup
 
 def get_packages(path):
-    """
-    Returns a list of packages present in the given path.
-    """
     with open(path, 'r') as f:
         requirements =  [line.strip() for line in f.readlines() if line.strip()] 
 

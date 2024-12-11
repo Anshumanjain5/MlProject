@@ -31,3 +31,14 @@ def evaluate_models(x_train,y_train,x_test,y_test,models):
         logging.error(f"Error occurred while evaluating models: {str(e)}")
         raise CustomError(e,sys)
     return results
+
+def load_object(path):
+    try:
+        logging.info(f"Loading object from {path}")
+        with open(path, 'rb') as f:
+            obj = pickle.load(f)
+            logging.info(f"Object loaded successfully from {path}")
+            return obj
+    except Exception as e:
+        logging.error(f"Error occurred while loading object: {str(e)}")
+        raise CustomError(e, sys)

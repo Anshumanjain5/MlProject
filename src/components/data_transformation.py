@@ -26,15 +26,7 @@ class DataTransformation:
         self.train = pd.read_csv(ingestion[0])
         self.test = pd.read_csv(ingestion[1])
 
-    def differentiate_columns(self,target) -> tuple[list, list]:
-        """Classifies columns into numerical and categorical."""
-        xtrain = self.train.drop(target,axis=1)
-        cat_columns = xtrain.select_dtypes(include=['object']).columns.tolist()
-        num_columns = xtrain.select_dtypes(exclude=['object']).columns.tolist()
-        logging.info("Columns classification process completed")
-        return num_columns, cat_columns
-
-    def get_data_transformer(self,target):
+    def get_data_transformer(self):
         """Creates a preprocessing pipeline for numerical and categorical data."""
         try:
             logging.info("Initializing DataTransformer preprocess...")
@@ -49,7 +41,7 @@ class DataTransformation:
                 ('onehot', OneHotEncoder(handle_unknown='ignore'))
             ])
 
-            num_columns, cat_columns = self.differentiate_columns(target)
+            num_columns, cat_columns = (["reading_score","writing_score"],["gender","race_ethnicity","parental_level_of_education","lunch","test_preparation_course"])
 
             preprocessor = ColumnTransformer(
                 transformers=[
@@ -67,18 +59,22 @@ class DataTransformation:
         """Applies preprocessing and saves the preprocessor object."""
         try:
             target_column = "math_score"
-            preprocessor = self.get_data_transformer(target_column)
+            preprocessor = self.get_data_transformer()
+            
+            # Fit the preprocessor on the training data
+            train_set = self.train.drop(target_column, axis=1)
+            preprocessor.fit(train_set)  # Fitting on training data
+            
+            # Save the fitted preprocessor
             save_object(preprocessor, self.preprocessor_path)
 
-
-            train_set = self.train.drop(target_column, axis=1)
-            target_train_set = self.train[target_column]
-
+            # Now transform both training and test sets
+            train_transformed = preprocessor.transform(train_set)
             test_set = self.test.drop(target_column, axis=1)
-            target_test_set = self.test[target_column]
-
-            train_transformed = preprocessor.fit_transform(train_set)
             test_transformed = preprocessor.transform(test_set)
+
+            target_train_set = self.train[target_column]
+            target_test_set = self.test[target_column]
 
             train_arr = np.c_[train_transformed, target_train_set]
             test_arr = np.c_[test_transformed, target_test_set]
@@ -91,5 +87,7 @@ class DataTransformation:
 if __name__ == "__main__":
     data_transformer = DataTransformation()
     train_arr, test_arr, preprocessor = data_transformer.initialize_data_transformer()
+    print(f"Train Array: {train_arr.shape}, Test Array: {test_arr.shape}")
+    print(train_arr)
     model_trainer = ModelTrainer()
     print(model_trainer.initiate_model_trainer(train_arr, test_arr))
